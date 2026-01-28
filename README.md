@@ -64,10 +64,6 @@ sdk.dir=/path/to/Android/Sdk
 GEMINI_API_KEY=your_gemini_api_key
 STREAM_CHAT_API_KEY=your_stream_chat_api_key
 GOOGLE_WEB_CLIENT_ID=your_google_web_client_id.apps.googleusercontent.com
-APP_API_KEY=your_optional_app_api_key
-FACEBOOK_APP_ID=your_facebook_app_id
-FACEBOOK_CLIENT_TOKEN=your_facebook_client_token
-FACEBOOK_LOGIN_PROTOCOL_SCHEME=fbYOUR_APP_ID
 ```
 
 Notes:
@@ -89,7 +85,6 @@ Notes:
 - Google Sign‑In: verify OAuth consent screen + SHA fingerprints
 - Gemini: verify your API key in `local.properties`
 - Stream Chat: verify API key and test chat screen
-- Facebook login: verify app id/client token
 
 ## Architecture Overview
 The app follows a feature‑first modular structure with shared core modules:
@@ -215,34 +210,7 @@ Contributions are welcome! Please open an issue or PR with a clear description.
 - [ ] `./gradlew test` passes
 - [ ] `./gradlew assembleDebug` builds
 
-## Troubleshooting
-### Google Sign‑In: `ApiException: 10`
-This means the Google/Firebase setup doesn’t match the running app.
-- Ensure package name is `com.example.getwell`
-- Add SHA‑1/256 to Firebase (debug/release as needed)
-- Download fresh `google-services.json`
-- Verify `GOOGLE_WEB_CLIENT_ID` matches Firebase’s Web client ID
 
-### Gemini errors
-- Ensure `GEMINI_API_KEY` is set in `local.properties`
-- Verify the API key is enabled in Google AI Studio
-- Re‑sync Gradle after updating `local.properties`
-
-### Stream Chat errors
-- Ensure `STREAM_CHAT_API_KEY` is set in `local.properties`
-- Verify your app is created in Stream Chat dashboard
-- Confirm the chat feature is enabled in Firebase/Firestore if required
-
-### Gradle wrapper lock/permission errors
-If you see lock/permission errors under `~/.gradle`:
-```
-sudo chown -R $USER:$USER ~/.gradle
-chmod -R u+rwX ~/.gradle
-```
-
-### Emulator/device issues
-- Ensure a device is connected: `adb devices`
-- Clear app data if authentication gets stuck.
 
 ## Security
 - Do not commit `local.properties` or `google-services.json`.
