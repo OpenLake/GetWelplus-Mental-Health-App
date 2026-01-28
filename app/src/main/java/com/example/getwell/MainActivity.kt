@@ -65,7 +65,8 @@ class MainActivity : ComponentActivity() {
         AuthUiClient(
             context = applicationContext,
             oneTapClient = Identity.getSignInClient(applicationContext),
-            Injection.instance()
+            Injection.instance(),
+            BuildConfig.GOOGLE_WEB_CLIENT_ID
         )
     }
 
@@ -208,7 +209,6 @@ class MainActivity : ComponentActivity() {
         return calendar.timeInMillis - now
     }
 }
-
 
 
 

@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.getwell.R
+import com.example.getwell.core.ui.R as UiR
 import com.example.getwell.data.ChatroomItem
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -47,27 +48,27 @@ fun ChatroomScreen(
         ChatroomItem(
             title = "Calmness Corner",
             description = "A serene space to unwind and share stress-relief techniques.",
-            icon = R.drawable._icon__google_,
+            icon = UiR.drawable._icon__google_,
 
         ),ChatroomItem(
             title = "Stress-Free Zone",
             description = "A supportive environment for discussing stress management tips.",
-            icon = R.drawable._icon__google_,
+            icon = UiR.drawable._icon__google_,
 
         ),ChatroomItem(
             title = "Serenity Space",
             description = "A cozy room for guided breathing, meditation, and relaxation.",
-            icon = R.drawable._icon__google_,
+            icon = UiR.drawable._icon__google_,
 
         ),ChatroomItem(
             title = "Peaceful Heaven",
             description = "A refuge for escaping stress and finding inner peace.",
-            icon = R.drawable._icon__google_,
+            icon = UiR.drawable._icon__google_,
 
         ),ChatroomItem(
             title = "Peaceful Heaven",
             description = "A refuge for escaping stress and finding inner peace.",
-            icon = R.drawable._icon__google_,
+            icon = UiR.drawable._icon__google_,
 
         )
     )
@@ -137,7 +138,7 @@ fun ChatroomScreen(
 //        ) {
 //
 //            Image(
-//                painter = painterResource(id = R.drawable.chatbg),
+//                painter = painterResource(id = UiR.drawable.chatbg),
 //                contentDescription = null,
 //                modifier = Modifier.fillMaxSize(),
 //                contentScale = ContentScale.FillBounds

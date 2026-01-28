@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -9,6 +11,15 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
+val localProperties = Properties().apply {
+    val file = rootProject.file("local.properties")
+    if (file.exists()) {
+        file.inputStream().use { load(it) }
+    }
+}
+
+fun localProperty(key: String): String = localProperties.getProperty(key) ?: ""
+
 android {
     namespace = "com.example.getwell"
     compileSdk = 34
@@ -19,6 +30,22 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        resValue("string", "gemini_key", localProperty("GEMINI_API_KEY"))
+        resValue("string", "chat_api_key", localProperty("STREAM_CHAT_API_KEY"))
+        resValue("string", "web_client_id", localProperty("GOOGLE_WEB_CLIENT_ID"))
+        resValue("string", "api_key", localProperty("APP_API_KEY"))
+        resValue("string", "facebook_app_id", localProperty("FACEBOOK_APP_ID"))
+        resValue("string", "facebook_client_token", localProperty("FACEBOOK_CLIENT_TOKEN"))
+        resValue("string", "fb_login_protocol_scheme", localProperty("FACEBOOK_LOGIN_PROTOCOL_SCHEME"))
+
+        buildConfigField("String", "GEMINI_API_KEY", "\"${localProperty("GEMINI_API_KEY")}\"")
+        buildConfigField("String", "STREAM_CHAT_API_KEY", "\"${localProperty("STREAM_CHAT_API_KEY")}\"")
+        buildConfigField("String", "GOOGLE_WEB_CLIENT_ID", "\"${localProperty("GOOGLE_WEB_CLIENT_ID")}\"")
+        buildConfigField("String", "APP_API_KEY", "\"${localProperty("APP_API_KEY")}\"")
+        buildConfigField("String", "FACEBOOK_APP_ID", "\"${localProperty("FACEBOOK_APP_ID")}\"")
+        buildConfigField("String", "FACEBOOK_CLIENT_TOKEN", "\"${localProperty("FACEBOOK_CLIENT_TOKEN")}\"")
+        buildConfigField("String", "FACEBOOK_LOGIN_PROTOCOL_SCHEME", "\"${localProperty("FACEBOOK_LOGIN_PROTOCOL_SCHEME")}\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -45,9 +72,10 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
     packaging {
         resources {
@@ -57,6 +85,19 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:common"))
+    implementation(project(":core:ui"))
+    implementation(project(":core:data"))
+    implementation(project(":feature:onboarding"))
+    implementation(project(":feature:auth"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:settings"))
+    implementation(project(":feature:resources"))
+    implementation(project(":feature:profile"))
+    implementation(project(":feature:chatbot"))
+    implementation(project(":feature:stress"))
+    implementation(project(":feature:relax"))
+
     implementation ("org.jsoup:jsoup:1.14.3")
     implementation ("androidx.paging:paging-compose:1.0.0-alpha14")
 
@@ -109,9 +150,7 @@ dependencies {
 
     implementation("com.valentinilk.shimmer:compose-shimmer:1.2.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    
-    implementation ("androidx.compose.runtime:runtime-livedata:<compose_version>")
+    implementation ("androidx.compose.runtime:runtime-livedata")
 
 
     // Hilt

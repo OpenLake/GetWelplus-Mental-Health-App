@@ -62,7 +62,8 @@ class ChatroomActivity : ComponentActivity() {
         AuthUiClient(
             context = applicationContext,
             oneTapClient = Identity.getSignInClient(applicationContext),
-            Injection.instance()
+            Injection.instance(),
+            BuildConfig.GOOGLE_WEB_CLIENT_ID
         )
     }
 
@@ -79,7 +80,7 @@ class ChatroomActivity : ComponentActivity() {
             StreamStatePluginFactory(config = StatePluginConfig(), appContext = this)
 
         // 2 - Set up the client for API calls and with the plugin for offline storage
-        val client = ChatClient.Builder(this.getString(R.string.chat_api_key), applicationContext)
+        val client = ChatClient.Builder(BuildConfig.STREAM_CHAT_API_KEY, applicationContext)
             .withPlugins(offlinePluginFactory, statePluginFactory)
             .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
             .build()

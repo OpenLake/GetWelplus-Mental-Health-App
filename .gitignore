@@ -1,7 +1,14 @@
-/app/src/main/res/values/strings.xml
 /app/google-services.json
 /app/release
 /.gradle
 /local.properties
 app/release/August_App_GetWel+.apk
-app/src/main/res/values/strings.xml
+/.idea
+**/build/
+*.apk
+*.aab
+*.iml
+*.jks
+*.keystore
+*.log
+**/google-services.json

@@ -21,6 +21,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.getwell.BuildConfig
 import com.example.getwell.R
 import com.example.getwell.authSystem.AuthUiClient
 import com.example.getwell.authSystem.AuthViewModel
@@ -80,6 +81,7 @@ import com.example.getwell.screens.stressmanager.data.RecommendationRepository
 import com.example.getwell.screens.stressmanager.ui.screens.TodaysRecommendationScreen
 import com.example.getwell.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
+import com.example.getwell.core.ui.R as UiR
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -411,22 +413,29 @@ fun Navigation(
 //                refViewModel = reflectionViewModel,
                 onPressed = {
                     homeViewModel.setDisplayState(false)
-                }) {
-                scope.launch {
-                    authUiClient.signOut()
-                    Toast.makeText(
-                        applicationContext,
-                        "Signed Out Successfully",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    homeViewModel.setDisplayState(true)
-                    navController.navigate(Screen.SignInScreen.route)
-                    viewModel.resetState()
+                },
+                onSignOutAccount = {
+                    scope.launch {
+                        authUiClient.signOut()
+                        Toast.makeText(
+                            applicationContext,
+                            "Signed Out Successfully",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        homeViewModel.setDisplayState(true)
+                        navController.navigate(Screen.SignInScreen.route)
+                        viewModel.resetState()
 //                    refViewModel.resetData()
 
-                }
+                    }
 
-            }
+                },
+                onOpenChatroom = {
+                    val intent = android.content.Intent(applicationContext, com.example.getwell.ChatroomActivity::class.java)
+                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                    applicationContext.startActivity(intent)
+                }
+            )
         }
 
         composable(Screen.ChatroomScreen.route) {
@@ -435,12 +444,29 @@ fun Navigation(
 
         }
         composable(Screen.RelaxScreen.route) {
-            RelaxScreen(navController = navController)
+            RelaxScreen(
+                navController = navController,
+                onOpenChatroom = {
+                    val intent = android.content.Intent(applicationContext, com.example.getwell.ChatroomActivity::class.java)
+                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                    applicationContext.startActivity(intent)
+                }
+            )
 
         }
 
         composable(Screen.ProfileScreen.route) {
-            ProfileScreen(navController = navController, userData = authUiClient.getSignedInUser(),stressViewModel){}
+            ProfileScreen(
+                navController = navController,
+                userData = authUiClient.getSignedInUser(),
+                viewModel = stressViewModel,
+                onProfileClick = {},
+                onOpenChatroom = {
+                    val intent = android.content.Intent(applicationContext, com.example.getwell.ChatroomActivity::class.java)
+                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                    applicationContext.startActivity(intent)
+                }
+            )
         }
 
         composable(Screen.SettingsScreen.route) {
@@ -471,22 +497,50 @@ fun Navigation(
         }
 
         composable(Screen.EducationScreen.route) {
-
-            EducationScreen(navController = navController)
+            EducationScreen(
+                navController = navController,
+                onOpenChatroom = {
+                    val intent = android.content.Intent(applicationContext, com.example.getwell.ChatroomActivity::class.java)
+                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                    applicationContext.startActivity(intent)
+                }
+            )
         }
 
         composable(Screen.PracticalGuidesScreen.route) {
-            PracticalGuidesScreen(navController = navController)
+            PracticalGuidesScreen(
+                navController = navController,
+                onOpenChatroom = {
+                    val intent = android.content.Intent(applicationContext, com.example.getwell.ChatroomActivity::class.java)
+                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                    applicationContext.startActivity(intent)
+                }
+            )
 
         }
 
         composable(Screen.WellnessCenters.route) {
-            WellnessCentersScreen(navController = navController, locationViewModel)
+            WellnessCentersScreen(
+                navController = navController,
+                locationViewModel = locationViewModel,
+                onOpenChatroom = {
+                    val intent = android.content.Intent(applicationContext, com.example.getwell.ChatroomActivity::class.java)
+                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                    applicationContext.startActivity(intent)
+                }
+            )
 
         }
 
         composable(Screen.SupportResourcesScreen.route) {
-            SupportResourcesScreen(navController = navController)
+            SupportResourcesScreen(
+                navController = navController,
+                onOpenChatroom = {
+                    val intent = android.content.Intent(applicationContext, com.example.getwell.ChatroomActivity::class.java)
+                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                    applicationContext.startActivity(intent)
+                }
+            )
 
         }
         composable(Screen.QuizBoardingScreen.route) {
@@ -944,7 +998,7 @@ fun Navigation(
         composable(Screen.ListemItemScreen.route) {
             val musicItem =
                 navController.previousBackStackEntry?.savedStateHandle?.get<ListenItem>("music")
-                    ?: ListenItem("", R.drawable.chatbg)
+                    ?: ListenItem("", UiR.drawable.chatbg)
             ListenItemScreen(
                 navController = navController,
                 item = musicItem
@@ -983,7 +1037,14 @@ fun Navigation(
         }
 
         composable(Screen.BreathingMainScreen.route) {
-            BreathingMainScreen(navController = navController)
+            BreathingMainScreen(
+                navController = navController,
+                onOpenChatroom = {
+                    val intent = android.content.Intent(applicationContext, com.example.getwell.ChatroomActivity::class.java)
+                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                    applicationContext.startActivity(intent)
+                }
+            )
         }
 
         composable(Screen.RestfulSleep.route) {
@@ -1034,7 +1095,14 @@ fun Navigation(
         }
 
         composable(Screen.MentalTherapyMainScreen.route) {
-           MentalTherapyMainScreen(navController = navController)
+           MentalTherapyMainScreen(
+               navController = navController,
+               onOpenChatroom = {
+                   val intent = android.content.Intent(applicationContext, com.example.getwell.ChatroomActivity::class.java)
+                   intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                   applicationContext.startActivity(intent)
+               }
+           )
         }
 
 
@@ -1111,21 +1179,22 @@ fun Navigation(
             TodaysRecommendationScreen(
                 navController = navController,
                 viewModel = stressViewModel,
-                repository = RecommendationRepository(context.getString(R.string.gemini_key))
+                repository = RecommendationRepository(BuildConfig.GEMINI_API_KEY)
             )
         }
 
 
         composable(Screen.ChatBot.route) {
-            ChatScreen(navController = navController)
+            ChatScreen(
+                navController = navController,
+                onOpenChatroom = {
+                    val intent = android.content.Intent(applicationContext, com.example.getwell.ChatroomActivity::class.java)
+                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                    applicationContext.startActivity(intent)
+                }
+            )
 
         }
     }
 }
-
-
-
-
-
-
 

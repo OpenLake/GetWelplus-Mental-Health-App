@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GetWel+</string>
+
+    <string name="pranayama_title">Pranayama Practice</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="reset">Reset</string>
+    <string name="rounds_label">Number of Rounds</string>
+</resources>

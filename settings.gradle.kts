@@ -19,4 +19,16 @@ dependencyResolutionManagement {
 
 rootProject.name = "GetWell+"
 include(":app")
+include(":core:common")
+include(":core:ui")
+include(":core:data")
+include(":feature:onboarding")
+include(":feature:auth")
+include(":feature:home")
+include(":feature:settings")
+include(":feature:resources")
+include(":feature:profile")
+include(":feature:chatbot")
+include(":feature:stress")
+include(":feature:relax")
  
